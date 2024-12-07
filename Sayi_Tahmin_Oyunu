@@ -1,0 +1,66 @@
+package Diger;
+import java.util.Arrays;
+import java.util.Scanner;
+import java.util.Random;
+
+public class Sayi_Tahmin_Oyunu {
+    public static void main(String[] args) {
+        int right = 0, selected;
+        int sright = 0;
+        int [] wrong = new int [5];
+        boolean isWin = false;
+
+        boolean isWrong = false;
+        // int number = (int) (Math.random()*100);
+        //System.out.println(number);
+
+        Random random = new Random();
+        int number = random.nextInt(100);
+
+        Scanner input = new Scanner(System.in);
+
+
+        while (right < 5){
+            System.out.print("Lütfen tahmininizi giriniz : ");
+            selected = input.nextInt();
+
+            if (selected <0 || selected > 99){
+                System.out.println("Lütfen 1 ile 100 arasında bir sayı giriniz.");
+                if (isWrong){
+                    right++;
+                    System.out.println("Çok sayıda hatalı giriş yaptınız. Kalan hakkınız = " + (5 - right));
+                }else {
+                    System.out.println((3-sright) + " sefer daha hatalı giriş yaparsanız ana hakkınızdan düşülecektir. ");
+                    sright++;
+                    if (sright==3){
+                        isWrong=true;
+                    }else {
+                        isWrong=false;
+                    }
+                }
+                continue;
+            }
+            if (selected==number){
+                System.out.println("Tebrikler, doğru sayıyı buldunuz ! " +selected+ " doğru sayıydı." );
+                isWin = true;
+                break;
+            }else {
+
+                System.out.println("Tahmininiz yanlış!");
+                if (selected > number){
+                    System.out.println(selected + " sayısı, gizli sayıdan büyüktür.");
+                }else {
+                    System.out.println(selected + " sayısı, gizli sayıdan küçüktür. ");
+                }
+                wrong[right] = selected;
+                right++;
+                System.out.println("Kalan hakkınız = " + (5-right));
+            }
+
+        }
+        if (!isWin){
+            System.out.println("Kaybettiniz! Doğru sayı = " + number);
+            System.out.println("Tahinleriniz : " + Arrays.toString(wrong));
+        }
+    }
+}
